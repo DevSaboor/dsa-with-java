@@ -1,0 +1,141 @@
+# 📝 Assignment — Introduction to Programming
+
+---
+
+### Exercise 1 — Compile Time vs. Runtime
+
+**Goal**
+Understand the difference between when a program's code is checked and when it is actually executed, particularly in static and dynamic languages.
+
+**Question**
+
+Explain in your own words:
+
+> What is the difference between **compile time** and **runtime** in static vs. dynamic languages?
+
+<details>
+<summary><b>Click to reveal the Answer</b></summary>
+
+**Compile time** is the stage before a program runs, when the source code is processed and checked. In **static languages** such as Java and C++, type checking is performed during compile time. For example, assigning a string to an `int` variable in Java causes a compilation error before the program runs.
+
+**Runtime** is the stage when the program is actually executing. In **dynamic languages** such as Python and JavaScript, type-related checks are generally performed during runtime. A variable can therefore hold different types of values during execution.
+
+In short:
+
+```text
+Static Language
+Source Code
+     ↓
+Compile Time → Type Checking
+     ↓
+Execution / Runtime
+
+
+Dynamic Language
+Source Code
+     ↓
+Execution / Runtime → Type Checking
+```
+
+</details>
+
+**What this teaches**
+The difference between **compile-time type checking** and **runtime type checking**.
+
+---
+
+### Exercise 2 — Diagram Dry Run: References and Heap Objects
+
+**Goal**
+Understand how multiple reference variables can point to objects and how reassignment affects those references.
+
+**Starting point**
+
+Consider the following statements:
+
+```text
+x = [10, 20]
+y = x
+x = [30, 40]
+```
+
+**Tasks**
+
+1. Draw a **Stack and Heap diagram** after all three statements have executed.
+2. What object does `y` point to?
+3. Is `[10, 20]` eligible for garbage collection?
+4. Explain why.
+
+<details>
+<summary><b>Click to reveal the Answer</b></summary>
+
+After:
+
+```text
+x = [10, 20]
+```
+
+`x` points to the `[10, 20]` object:
+
+```text
+   STACK                         HEAP
+┌──────────┐                ┌────────────┐
+│    x ────┼───────────────>│ [10, 20]  │
+└──────────┘                └────────────┘
+```
+
+Then:
+
+```text
+y = x
+```
+
+Both `x` and `y` point to the same object:
+
+```text
+   STACK                         HEAP
+┌──────────┐                ┌────────────┐
+│    x ────┼───────────────>│ [10, 20]  │
+│          │                └────────────┘
+│    y ────┼───────────────────────┘
+└──────────┘
+```
+
+Finally:
+
+```text
+x = [30, 40]
+```
+
+`x` is reassigned to a new object. `y` still points to the original `[10, 20]` object:
+
+```text
+   STACK                         HEAP
+┌──────────┐                ┌────────────┐
+│    x ────┼───────────────>│ [30, 40]  │
+│          │                └────────────┘
+│    y ────┼───────────────>┌────────────┐
+└──────────┘                │ [10, 20]  │
+                            └────────────┘
+```
+
+### Answers
+
+**1. What object does `y` point to?**
+
+`y` points to:
+
+```text
+[10, 20]
+```
+
+**2. Is `[10, 20]` eligible for garbage collection?**
+
+**No.**
+
+Although `x` no longer points to `[10, 20]`, `y` still references it. Therefore, the object still has an active reference and is not eligible for garbage collection.
+
+</details>
+
+**What this teaches**
+Reference variables, shared references, reassignment, object mutation, and garbage-collection eligibility.
